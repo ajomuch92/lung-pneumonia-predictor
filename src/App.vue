@@ -1,17 +1,30 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Predictor de Pulmonía por Radiografía</h1>
+    <h2>Selecciona una image de tu radiografía</h2>
+    <input type="file" accept="image/*" @change="onFileChange"/>
+    <p>Resultado: {{result}}</p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data: () => ({
+    result: '',
+  }),
+  methods: {
+    onFileChange(e) {
+      const files = e.target.files || e.dataTransfer.files;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        console.log(ev.target.result);
+      }
+      if (files) {
+        reader.readAsDataURL(files[0]);
+      }
+    }
   }
 }
 </script>
@@ -21,8 +34,11 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+  height: 99vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
